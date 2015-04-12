@@ -22,6 +22,18 @@ class Storage:
                 os.rename(self.graph_file + prefixes[i], self.graph_file + prefixes[i+1])
         nx.write_gpickle(self.nxgraph, self.graph_file + prefixes[0]) # "/home/alexmak/test.pickle")#
 
+    def write_gexf(self):
+        # for node in self.nxgraph.node:
+        #     for attrib in self.nxgraph.node[node]:
+        #         if type(self.nxgraph.node[node][attrib]) == dict:
+        #             print node
+
+        nx.write_graphml(self.nxgraph, self.graph_file + ".graphml")
+
+    def read_gexf(self):
+        self.nxgraph = nx.write_gexf(self.graph_file + ".gexf")
+
+
     def __del__(self):
         #print "Deleted"
         self.persist()

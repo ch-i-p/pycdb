@@ -3,6 +3,7 @@ from datetime import time
 from annoying.decorators import render_to
 from portal.utils.timer import Timer
 from graph_db.storage import Storage
+from django.conf import settings
 
 
 @render_to(template="portal/index.html")
@@ -62,4 +63,12 @@ def index(request):
 #
 #    ret = {"nodes" : cfg.getAllEntities(), "edges" : "", "tst" : request.session["selected_configuration"], "timer_info" : "<br>".join(timer.get_info())}
 #    return ret
+    return {}
+
+@render_to(template="portal/index.html")
+def write_gexf(request):
+    config_name = request.session["selected_configuration"]
+    storage = Storage(settings.CONFIGURATIONS[config_name].storage)
+    storage.write_gexf()
+
     return {}
